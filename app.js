@@ -1,17 +1,27 @@
 const express = require('express');
 const app = express();
-const port = 3003;
+const port = 3004;
 const middleware = require('./middleware')
 const path = require('path')
 const bodyParser = require("body-parser")
 const mongoose = require("mongoose");
-mongoose.connect("mongodb+srv://admin:dbUserPassword@twitterclonecluster.e0mcw.azure.mongodb.net/TwitterCloneDB?retryWrites=true&w=majority")
-.then(() => {
-    console.log("database connection successful");
-})
-.catch((err) => {
-    console.log("database connection error " + err);
-})
+require('dotenv').config();
+const username = process.env.DB_USERNAME;
+const password = process.env.DB_PASSWORD;
+const dbName = process.env.DB_NAME;
+const uri = `mongodb+srv://${username}:${password}@cluster0.wbznb0b.mongodb.net/${dbName}?retryWrites=true&w=majority&appName=Cluster0`;
+
+
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+        console.log("Username:", username);
+        console.log("Database connection successful");
+    })
+    .catch((err) => {
+        console.error("Database connection error:", err);
+        console.log("Username:", username); 
+    });
+
 
 const server = app.listen(port, () => console.log("Server listening on port " + port));
 
