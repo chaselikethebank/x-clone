@@ -16,5 +16,15 @@
     "mongodb": "^3.7.4",
     "mongoose": "^5.13.22",
     "pug": "^3.0.0"
+  },
+  "vercel": {
+    "functions": {
+      "api/**/*.js": {
+        "runtime": "@vercel/node"
+      }
+    },
+    "routes": [
+      { "src": "/(.*)", "dest": "/app.js" }
+    ]
   }
 }
